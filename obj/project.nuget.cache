@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "8s0xfLOFWANCgDMVh6t3nxzpe10sXx/sxZVFHbQ56rxsecq2ljWj/hBcEcONKdSZ/A/phaDaBsi/FGLmu1njgg==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\Stardew Mods\\EnchantedGalaxyWeapons\\EnchantedGalaxyWeapons.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\shaih\\.nuget\\packages\\pathoschild.stardew.modbuildconfig\\4.1.1\\pathoschild.stardew.modbuildconfig.4.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}

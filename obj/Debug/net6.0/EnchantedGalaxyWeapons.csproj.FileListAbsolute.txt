@@ -1,0 +1,8 @@
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\bin\Debug\net6.0\EnchantedGalaxyWeapons.deps.json
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\bin\Debug\net6.0\EnchantedGalaxyWeapons.dll
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.csproj.AssemblyReference.cache
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.AssemblyInfoInputs.cache
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.AssemblyInfo.cs
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.csproj.CoreCompileInputs.cache
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.dll
