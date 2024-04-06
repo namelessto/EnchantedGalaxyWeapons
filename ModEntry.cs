@@ -27,8 +27,6 @@ namespace EnchantedGalaxyWeapons
 
         public override void Entry(IModHelper helper)
         {
-            this.Monitor.Log($"Mod started", LogLevel.Debug);
-
             helper.Events.GameLoop.DayStarted += this.DailyChecks;
             helper.Events.Player.Warped += this.CheckIfMine;
         }
@@ -43,9 +41,7 @@ namespace EnchantedGalaxyWeapons
         private void DailyChecks(object? sender, DayStartedEventArgs e)
         {
             unlockedGalaxy = Game1.player.mailReceived.Contains("galaxySword");
-            this.Monitor.Log($"unlockedGalaxy = {Game1.player.mailReceived.Contains("galaxySword")}", LogLevel.Debug);
             unlockedInfinity = Game1.player.achievements.Contains(42);
-            this.Monitor.Log($"unlockedInfinity = {Game1.player.achievements.Contains(42)}", LogLevel.Debug);
             maxSpawnForDay = 2;
         }
 
@@ -57,7 +53,7 @@ namespace EnchantedGalaxyWeapons
             GameLocation location = e.NewLocation;
             if (location is MineShaft mineShaft)
             {
-                if (unlockedGalaxy || unlockedInfinity && maxSpawnForDay > 0)
+                if ((unlockedGalaxy || unlockedInfinity) && maxSpawnForDay > 0)
                 {
                     TrySpawnBreakableContainer(mineShaft);
                 }
@@ -94,9 +90,14 @@ namespace EnchantedGalaxyWeapons
             {
                 Vector2 objectPos = new(p.X, p.Y);
                 mine.objects.Add(objectPos, CustomBreakableObject.GetBarrelForMines(objectPos, mine));
+                this.Monitor.Log($"A barrel has spawned!", LogLevel.Info);
                 maxSpawnForDay--;
-                this.Monitor.Log($"Spawn crate", LogLevel.Debug);
+                if (maxSpawnForDay == 0)
+                {
+                    this.Monitor.Log($"No more barrels will spawn today.", LogLevel.Info);
+                }
             }
+            
         }
     }
 }

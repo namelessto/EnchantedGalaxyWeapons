@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\Projects\\Stardew Mods\\EnchantedGalaxyWeapons\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B3C01218-DE97-4407-9A8D-D6932A6093F9}|EnchantedGalaxyWeapons.csproj|d:\\projects\\stardew mods\\enchantedgalaxyweapons\\custombreakableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3C01218-DE97-4407-9A8D-D6932A6093F9}|EnchantedGalaxyWeapons.csproj|solutionrelative:custombreakableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B3C01218-DE97-4407-9A8D-D6932A6093F9}|EnchantedGalaxyWeapons.csproj|d:\\projects\\stardew mods\\enchantedgalaxyweapons\\modentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B3C01218-DE97-4407-9A8D-D6932A6093F9}|EnchantedGalaxyWeapons.csproj|solutionrelative:modentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3C01218-DE97-4407-9A8D-D6932A6093F9}|EnchantedGalaxyWeapons.csproj|d:\\projects\\stardew mods\\enchantedgalaxyweapons\\custombreakableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3C01218-DE97-4407-9A8D-D6932A6093F9}|EnchantedGalaxyWeapons.csproj|solutionrelative:custombreakableobject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B3C01218-DE97-4407-9A8D-D6932A6093F9}|EnchantedGalaxyWeapons.csproj|d:\\projects\\stardew mods\\enchantedgalaxyweapons\\manifest.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -22,17 +22,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CustomBreakableObject.cs",
               "DocumentMoniker": "D:\\Projects\\Stardew Mods\\EnchantedGalaxyWeapons\\CustomBreakableObject.cs",
               "RelativeDocumentMoniker": "CustomBreakableObject.cs",
               "ToolTip": "D:\\Projects\\Stardew Mods\\EnchantedGalaxyWeapons\\CustomBreakableObject.cs",
               "RelativeToolTip": "CustomBreakableObject.cs",
-              "ViewState": "AQIAABQBAAAAAAAAAAAswBwBAAAxAAAA",
+              "ViewState": "AQIAAMMAAAAAAAAAAAAAwC8BAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-05T20:04:29.741Z",
               "EditorCaption": ""
@@ -51,13 +51,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "ModEntry.cs",
               "DocumentMoniker": "D:\\Projects\\Stardew Mods\\EnchantedGalaxyWeapons\\ModEntry.cs",
               "RelativeDocumentMoniker": "ModEntry.cs",
               "ToolTip": "D:\\Projects\\Stardew Mods\\EnchantedGalaxyWeapons\\ModEntry.cs",
               "RelativeToolTip": "ModEntry.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAIAAAA",
+              "ViewState": "AQIAADIAAAAAAAAAAAAiwDsAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-05T19:48:32.509Z",
               "EditorCaption": ""

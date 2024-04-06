@@ -6,3 +6,4 @@ D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxy
 D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.AssemblyInfo.cs
 D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.csproj.CoreCompileInputs.cache
 D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.dll
+D:\Projects\Stardew Mods\EnchantedGalaxyWeapons\obj\Debug\net6.0\EnchantedGalaxyWeapons.sourcelink.json
