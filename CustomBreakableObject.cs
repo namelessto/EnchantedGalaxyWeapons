@@ -257,7 +257,7 @@ namespace EnchantedGalaxyWeapons
                     }
                     break;
                 default:
-                    return;
+                    break;
             }
             double dropChance = r.NextDouble();
             if (dropChance <= maxSucceedChance)
@@ -269,9 +269,13 @@ namespace EnchantedGalaxyWeapons
 
                 Item weapon = GenerateWeapon(r);
                 Game1.createItemDebris(weapon, new Vector2(x, y) * 64f + new Vector2(32f), r.Next(4), Game1.currentLocation);
-                return;
+                
             }
-
+            if (ModEntry.maxSpawnForDay == 0)
+            {
+                HUDMessage message = HUDMessage.ForCornerTextbox("The powerful aura won't return again today..");
+                Game1.addHUDMessage(message);
+            }
             return;
         }
 

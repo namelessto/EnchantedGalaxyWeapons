@@ -16,7 +16,9 @@ namespace EnchantedGalaxyWeapons
         public static bool unlockedGalaxy;
         public static bool unlockedInfinity;
 
-        private int maxSpawnForDay = 0;
+        public static int maxSpawnForDay = 0;
+
+        private HUDMessage message;
 
         /*********
         ** Public methods
@@ -42,7 +44,7 @@ namespace EnchantedGalaxyWeapons
         {
             unlockedGalaxy = Game1.player.mailReceived.Contains("galaxySword");
             unlockedInfinity = Game1.player.achievements.Contains(42);
-            maxSpawnForDay = 2;
+            maxSpawnForDay = 2 + Math.Max(0, Game1.player.LuckLevel);
         }
 
         /// <summary> Check if player is currently in the mines or skull cavern</summary>
@@ -90,14 +92,10 @@ namespace EnchantedGalaxyWeapons
             {
                 Vector2 objectPos = new(p.X, p.Y);
                 mine.objects.Add(objectPos, CustomBreakableObject.GetBarrelForMines(objectPos, mine));
-                this.Monitor.Log($"A barrel has spawned!", LogLevel.Info);
+                message = HUDMessage.ForCornerTextbox("Powerful aura is in the air");
+                Game1.addHUDMessage(message);
                 maxSpawnForDay--;
-                if (maxSpawnForDay == 0)
-                {
-                    this.Monitor.Log($"No more barrels will spawn today.", LogLevel.Info);
-                }
             }
-            
         }
     }
 }
