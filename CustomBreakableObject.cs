@@ -4,6 +4,7 @@ using Netcode;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Constants;
+using StardewValley.Enchantments;
 using StardewValley.Extensions;
 using StardewValley.Locations;
 using StardewValley.Objects;
@@ -18,20 +19,9 @@ namespace EnchantedGalaxyWeapons
         ** Properties
         *********/
 
-        List<string> weaponIDS = new() { "4", "23", "29" };
+        private readonly List<string> WeaponIDS = new() { "4", "23", "29", "62", "63", "64" };
+        private readonly List<int> StepsLevel = new() { 20, 40, 60, 80, 100, 120 };
 
-        Dictionary<int, double> succeedChancesByMineLevel = new Dictionary<int, double>
-        {
-            { 20, 0.6 },
-            { 40, 0.615 },
-            { 60, 0.63 },
-            { 80, 0.645 },
-            { 100, 0.66 },
-            { 120, 0.675 },
-            { 200, 0.69 },
-            { 300, 0.705 },
-            { 400, 0.72 }
-        };
 
         [XmlElement("debris")]
         private readonly int debris;
@@ -225,7 +215,7 @@ namespace EnchantedGalaxyWeapons
             {
                 Game1.createItemDebris(ItemRegistry.Create((Game1.player.stats.Get(StatKeys.Mastery(2)) != 0) ? "(O)GoldenMysteryBox" : "(O)MysteryBox"), new Vector2(x, y) * 64f + new Vector2(32f), -1, location);
             }
-            double maxSucceedChance = 0;
+            double maxSucceedChance = ModEntry.Config.BaseSpawnChance;
 
             Utility.trySpawnRareObject(who, new Vector2(x, y) * 64f, location, 1.5, 1.0, -1, r);
 
@@ -247,12 +237,11 @@ namespace EnchantedGalaxyWeapons
                 case "120":
                 case "122":
                 case "124":
-                    foreach (var entry in succeedChancesByMineLevel)
+                    foreach (var level in StepsLevel)
                     {
-                        if (mineLevel < entry.Key)
+                        if (mineLevel < level)
                         {
-                            maxSucceedChance += entry.Value;
-                            break;
+                            maxSucceedChance += ModEntry.Config.IncreaseSpawnChanceStep;
                         }
                     }
                     break;
@@ -262,16 +251,12 @@ namespace EnchantedGalaxyWeapons
             double dropChance = r.NextDouble();
             if (dropChance <= maxSucceedChance)
             {
-                if (ModEntry.unlockedInfinity)
-                {
-                    weaponIDS.AddRange(new string[] { "62", "63", "64" });
-                }
-
-                Item weapon = GenerateWeapon(r);
+                MeleeWeapon weapon = GenerateWeapon(r);
                 Game1.createItemDebris(weapon, new Vector2(x, y) * 64f + new Vector2(32f), r.Next(4), Game1.currentLocation);
-                
             }
-            if (ModEntry.maxSpawnForDay == 0)
+            ModEntry.MaxSpawnForDay--;
+
+            if (ModEntry.MaxSpawnForDay == 0)
             {
                 HUDMessage message = HUDMessage.ForCornerTextbox("The powerful aura won't return again today..");
                 Game1.addHUDMessage(message);
@@ -284,11 +269,28 @@ namespace EnchantedGalaxyWeapons
         /// </summary>
         /// <param name="r"></param>
         /// <returns></returns>
-        private Item GenerateWeapon(Random r)
+        private MeleeWeapon GenerateWeapon(Random r)
         {
-            int itemID = r.Next(weaponIDS.Count);
-            Item weapon = new MeleeWeapon(weaponIDS[itemID]);
-            weapon = MeleeWeapon.attemptAddRandomInnateEnchantment(weapon, r);
+
+            int itemID = 0;
+            if (ModEntry.Config.SkipInfinityCheck || ModEntry.UnlockedInfinity)
+            {
+                itemID = r.Next(WeaponIDS.Count);
+            }
+            else if (!ModEntry.Config.SkipInfinityCheck && !ModEntry.UnlockedInfinity)
+            {
+                itemID = r.Next(WeaponIDS.Count / 2);
+            }
+
+            MeleeWeapon weapon = new(WeaponIDS[itemID]);
+            weapon = (MeleeWeapon)MeleeWeapon.attemptAddRandomInnateEnchantment(weapon, r, force: ModEntry.Config.AlwaysHaveInnateEnchantment);
+
+            if (r.NextDouble() <= ModEntry.Config.ChanceForEnchantment || ModEntry.Config.AlwaysHaveEnchantment)
+            {
+                List<BaseEnchantment> enchantments = BaseWeaponEnchantment.GetAvailableEnchantmentsForItem(weapon);
+                int enchantmentIndex = r.Next(BaseWeaponEnchantment.GetAvailableEnchantmentsForItem(weapon).Count);
+                weapon.AddEnchantment(enchantments[enchantmentIndex]);
+            }
             return weapon;
         }
 

@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "8s0xfLOFWANCgDMVh6t3nxzpe10sXx/sxZVFHbQ56rxsecq2ljWj/hBcEcONKdSZ/A/phaDaBsi/FGLmu1njgg==",
+  "dgSpecHash": "Prfrm0QcUtYHLvemn01T6goby8Xh8Byf8Yh55sOw08+ZypWnTLhL1Vib4ke+RLgBeK4l3X3Ppeteo46GZmgT9Q==",
   "success": true,
   "projectFilePath": "D:\\Projects\\Stardew Mods\\EnchantedGalaxyWeapons\\EnchantedGalaxyWeapons.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\shaih\\.nuget\\packages\\pathoschild.stardew.modbuildconfig\\4.1.1\\pathoschild.stardew.modbuildconfig.4.1.1.nupkg.sha512"
+    "C:\\Users\\shaih\\.nuget\\packages\\pathoschild.stardew.modbuildconfig\\4.1.1\\pathoschild.stardew.modbuildconfig.4.1.1.nupkg.sha512",
+    "C:\\Users\\shaih\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.28\\microsoft.windowsdesktop.app.ref.6.0.28.nupkg.sha512",
+    "C:\\Users\\shaih\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.28\\microsoft.netcore.app.ref.6.0.28.nupkg.sha512",
+    "C:\\Users\\shaih\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.28\\microsoft.aspnetcore.app.ref.6.0.28.nupkg.sha512"
   ],
   "logs": []
 }
