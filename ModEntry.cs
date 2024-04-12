@@ -206,7 +206,7 @@ namespace EnchantedGalaxyWeapons
         {
             UnlockedGalaxy = Game1.player.mailReceived.Contains("galaxySword");
             UnlockedInfinity = Game1.player.achievements.Contains(42);
-            MaxSpawnForDay = 2 + Math.Max(0, Game1.player.LuckLevel);
+            MaxSpawnForDay = Config.DailySpawnLimit + Math.Max(0, Game1.player.LuckLevel);
         }
 
         /// <summary> Check if player is currently in the mines or skull cavern</summary>
@@ -253,9 +253,6 @@ namespace EnchantedGalaxyWeapons
 
                 while (amountToSpawn > 0)
                 {
-                    this.Monitor.Log($"p = {p}", LogLevel.Debug);
-                    this.Monitor.Log($"amountToSpawn = {amountToSpawn}", LogLevel.Debug);
-
                     if (mine.isTileClearForMineObjects(p.X, p.Y))
                     {
                         objectPos = new(p.X, p.Y);
@@ -264,7 +261,6 @@ namespace EnchantedGalaxyWeapons
                     }
                     p = new Point(mineRandom.Next(backLayer.LayerWidth), mineRandom.Next(backLayer.LayerHeight));
                 }
-
                 Message = HUDMessage.ForCornerTextbox("Powerful aura is in the air");
                 Game1.addHUDMessage(Message);
             }
