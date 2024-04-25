@@ -1,4 +1,6 @@
-﻿using System.Xml.Serialization;
+﻿using System.Collections.Generic;
+using System;
+using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Netcode;
 using StardewModdingAPI;
@@ -19,7 +21,6 @@ namespace EnchantedGalaxyWeapons
         ** Properties
         *********/
 
-        private readonly List<string> WeaponIDS = new() { "4", "23", "29", "62", "63", "64" };
         private readonly List<int> StepsLevel = new() { 20, 40, 60, 80, 100, 120 };
 
 
@@ -230,24 +231,17 @@ namespace EnchantedGalaxyWeapons
                     }
                 }
             }
-
-            switch (base.ItemId)
+            if (!ModEntry.Config.HaveGlobalChance)
             {
-                case "118":
-                case "120":
-                case "122":
-                case "124":
-                    foreach (var level in StepsLevel)
+                foreach (var level in StepsLevel)
+                {
+                    if (mineLevel >= level)
                     {
-                        if (mineLevel < level)
-                        {
-                            maxSucceedChance += ModEntry.Config.IncreaseSpawnChanceStep;
-                        }
+                        maxSucceedChance += ModEntry.Config.IncreaseSpawnChanceStep;
                     }
-                    break;
-                default:
-                    break;
+                }
             }
+
             double dropChance = r.NextDouble();
             if (dropChance <= maxSucceedChance)
             {
@@ -271,27 +265,216 @@ namespace EnchantedGalaxyWeapons
         /// <returns></returns>
         private MeleeWeapon GenerateWeapon(Random r)
         {
-
+            List<string> weaponsIDs = getWeaponsToChoose();
+            List<BaseEnchantment> enchantments;
             int itemID = 0;
             if (ModEntry.Config.SkipInfinityCheck || ModEntry.UnlockedInfinity)
             {
-                itemID = r.Next(WeaponIDS.Count);
+                itemID = r.Next(weaponsIDs.Count);
             }
             else if (!ModEntry.Config.SkipInfinityCheck && !ModEntry.UnlockedInfinity)
             {
-                itemID = r.Next(WeaponIDS.Count / 2);
+                itemID = r.Next(weaponsIDs.Count / 2);
             }
 
-            MeleeWeapon weapon = new(WeaponIDS[itemID]);
-            weapon = (MeleeWeapon)MeleeWeapon.attemptAddRandomInnateEnchantment(weapon, r, force: ModEntry.Config.AlwaysHaveInnateEnchantment);
-
-            if (r.NextDouble() <= ModEntry.Config.ChanceForEnchantment || ModEntry.Config.AlwaysHaveEnchantment)
+            MeleeWeapon weapon = new(weaponsIDs[itemID]);
+            if (ModEntry.Config.KeepVanilla)
             {
-                List<BaseEnchantment> enchantments = BaseWeaponEnchantment.GetAvailableEnchantmentsForItem(weapon);
-                int enchantmentIndex = r.Next(BaseWeaponEnchantment.GetAvailableEnchantmentsForItem(weapon).Count);
-                weapon.AddEnchantment(enchantments[enchantmentIndex]);
+                weapon = (MeleeWeapon)MeleeWeapon.attemptAddRandomInnateEnchantment(weapon, r, force: ModEntry.Config.ForceInnateEnchantment);
+            }
+            else
+            {
+                enchantments = getInnateEnchentments();
+                weapon = (MeleeWeapon)attemptAddInnateEnchantment(weapon, r, enchantments, force: ModEntry.Config.ForceInnateEnchantment);
+            }
+
+            if (r.NextDouble() <= ModEntry.Config.ChanceForEnchantment || ModEntry.Config.ForceHaveEnchantment)
+            {
+                enchantments = getEnchentments();
+                if (enchantments.Count > 0)
+                {
+                    int enchantmentIndex = r.Next(enchantments.Count);
+                    weapon.AddEnchantment(enchantments[enchantmentIndex]);
+                }
             }
             return weapon;
+        }
+
+        private List<string> getWeaponsToChoose()
+        {
+            List<string> weaponIDS = new();
+            if (ModEntry.Config.AllowGalSword)
+            {
+                weaponIDS.Add("4");
+            }
+            if (ModEntry.Config.AllowGalDagger)
+            {
+                weaponIDS.Add("23");
+            }
+            if (ModEntry.Config.AllowGalHammer)
+            {
+                weaponIDS.Add("29");
+            }
+            if (ModEntry.Config.AllowInfSword)
+            {
+                weaponIDS.Add("62");
+            }
+            if (ModEntry.Config.AllowInfHammer)
+            {
+                weaponIDS.Add("63");
+            }
+            if (ModEntry.Config.AllowInfDagger)
+            {
+                weaponIDS.Add("64");
+            }
+
+            return weaponIDS;
+        }
+
+        private List<BaseEnchantment> getEnchentments()
+        {
+            List<BaseEnchantment> enchantments = new();
+            if (ModEntry.Config.AllowArtful)
+            {
+                enchantments.Add(new ArtfulEnchantment());
+            }
+            if (ModEntry.Config.AllowBugKiller)
+            {
+                enchantments.Add(new BugKillerEnchantment());
+            }
+            if (ModEntry.Config.AllowCrusader)
+            {
+                enchantments.Add(new CrusaderEnchantment());
+            }
+            if (ModEntry.Config.AllowHaymaker)
+            {
+                enchantments.Add(new HaymakerEnchantment());
+            }
+            if (ModEntry.Config.AllowVampiric)
+            {
+                enchantments.Add(new VampiricEnchantment());
+            }
+
+            return enchantments;
+        }
+
+        private List<BaseEnchantment> getInnateEnchentments()
+        {
+            List<BaseEnchantment> enchantments = new();
+            if (ModEntry.Config.AllowDefense)
+            {
+                enchantments.Add(new DefenseEnchantment());
+            }
+            if (ModEntry.Config.AllowWeight)
+            {
+                enchantments.Add(new LightweightEnchantment());
+            }
+            if (ModEntry.Config.AllowSlimeGatherer)
+            {
+                enchantments.Add(new SlimeGathererEnchantment());
+            }
+            if (ModEntry.Config.AllowSlimeSlayer)
+            {
+                enchantments.Add(new SlimeSlayerEnchantment());
+            }
+            if (ModEntry.Config.AllowCritPow)
+            {
+                enchantments.Add(new CritPowerEnchantment());
+            }
+            if (ModEntry.Config.AllowCritChance)
+            {
+                enchantments.Add(new CritEnchantment());
+            }
+            if (ModEntry.Config.AllowAttack)
+            {
+                enchantments.Add(new AttackEnchantment());
+            }
+            if (ModEntry.Config.AllowSpeed)
+            {
+                enchantments.Add(new WeaponSpeedEnchantment());
+            }
+
+            return enchantments;
+        }
+
+        public static Item attemptAddInnateEnchantment(Item item, Random r, List<BaseEnchantment> enchantsToReroll, bool force = false)
+        {
+            if (enchantsToReroll.Count <= 0)
+            {
+                return item;
+            }
+
+            if (r == null)
+            {
+                r = Game1.random;
+            }
+
+            if ((r.NextDouble() < ModEntry.Config.ChanceForInnate || force) && item is MeleeWeapon meleeWeapon)
+            {
+                int max = Math.Min(enchantsToReroll.Count, ModEntry.Config.MaxInnateEnchantments);
+                int min = Math.Min(max, ModEntry.Config.MinInnateEnchantments);
+                int enchantmentsToSelect = r.Next(min, max);
+                int itemLevel = meleeWeapon.getItemLevel();
+                int n = enchantsToReroll.Count;
+
+                for (int j = n - 1; j > 0; j--)
+                {
+                    int k = r.Next(j + 1);
+                    BaseEnchantment value = enchantsToReroll[k];
+                    enchantsToReroll[k] = enchantsToReroll[j];
+                    enchantsToReroll[j] = value;
+                }
+
+                for (int i = 0; i < enchantmentsToSelect; i++)
+                {
+                    switch (enchantsToReroll[i])
+                    {
+                        case DefenseEnchantment:
+                            meleeWeapon.AddEnchantment(new DefenseEnchantment
+                            {
+                                Level = Math.Max(1, Math.Min(2, r.Next(itemLevel + 1) / 2 + 1))
+                            });
+                            break;
+                        case LightweightEnchantment:
+                            meleeWeapon.AddEnchantment(new LightweightEnchantment
+                            {
+                                Level = r.Next(1, 6)
+                            });
+                            break;
+                        case SlimeGathererEnchantment:
+                            meleeWeapon.AddEnchantment(new SlimeGathererEnchantment());
+                            break;
+                        case AttackEnchantment:
+                            meleeWeapon.AddEnchantment(new AttackEnchantment
+                            {
+                                Level = Math.Max(1, Math.Min(5, r.Next(itemLevel + 1) / 2 + 1))
+                            });
+                            break;
+                        case CritEnchantment:
+                            meleeWeapon.AddEnchantment(new CritEnchantment
+                            {
+                                Level = Math.Max(1, Math.Min(3, r.Next(itemLevel) / 3))
+                            });
+                            break;
+                        case WeaponSpeedEnchantment:
+                            meleeWeapon.AddEnchantment(new WeaponSpeedEnchantment
+                            {
+                                Level = Math.Max(1, Math.Min(Math.Max(1, 4 - meleeWeapon.speed.Value), r.Next(itemLevel)))
+                            });
+                            break;
+                        case SlimeSlayerEnchantment:
+                            meleeWeapon.AddEnchantment(new SlimeSlayerEnchantment());
+                            break;
+                        case CritPowerEnchantment:
+                            meleeWeapon.AddEnchantment(new CritPowerEnchantment
+                            {
+                                Level = Math.Max(1, Math.Min(3, r.Next(itemLevel) / 3))
+                            });
+                            break;
+                    }
+                }
+            }
+            return item;
         }
 
         /// <summary>

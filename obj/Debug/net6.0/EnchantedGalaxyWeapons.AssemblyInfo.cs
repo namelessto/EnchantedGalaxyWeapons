@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EnchantedGalaxyWeapons")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08dd8d6cf962333963292e8e0031fbb1e2679e83")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f4074594a3e5209de38fd362e1f2fd0ac577c41")]
 [assembly: System.Reflection.AssemblyProductAttribute("EnchantedGalaxyWeapons")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EnchantedGalaxyWeapons")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
