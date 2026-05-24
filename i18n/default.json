@@ -104,6 +104,31 @@
     "menu.weapons-infinity-dagger": "Infinity Dagger",
     "menu.weapons-infinity-hammer": "Infinity Hammer",
 
+    // Weapon category weights
+    "menu.weapons-category-weights": "Weapon Type Weights",
+    "menu.weapons-category-weight-tooltip": "Relative drop chance for this weapon type. 0 = never, 1 = normal, 2 = twice as likely. Applies to all weapons including Smith Yourself.\n",
+    "menu.weapons-category-sword": "Sword Weight",
+    "menu.weapons-category-dagger": "Dagger Weight",
+    "menu.weapons-category-hammer": "Hammer Weight",
+
+    // Integrations section
+    "menu.integrations-title": "Mod Integrations",
+    "menu.integrations-none": "No mods with custom weapons detected.",
+
+    // Spawn locations page
+    "menu.locations": "Spawn Locations",
+    "menu.locations-title": "Spawn Locations",
+    "menu.locations-lower-mines": "Lower Mines (1-40)",
+    "menu.locations-lower-mines-tooltip": "Allow barrels to spawn on floors 1-40 of the mines.\n",
+    "menu.locations-mid-mines": "Mid Mines (41-80)",
+    "menu.locations-mid-mines-tooltip": "Allow barrels to spawn on floors 41-80 of the mines.\n",
+    "menu.locations-upper-mines": "Upper Mines (81-120)",
+    "menu.locations-upper-mines-tooltip": "Allow barrels to spawn on floors 81-120 of the mines.\n",
+    "menu.locations-dangerous": "Dangerous Mines",
+    "menu.locations-dangerous-tooltip": "Allow barrels to spawn in dangerous variants of the mines.\n",
+    "menu.locations-skull-cavern": "Skull Cavern",
+    "menu.locations-skull-cavern-tooltip": "Allow barrels to spawn in the Skull Cavern.\n",
+
     /*********
     ** In-game text
     *********/

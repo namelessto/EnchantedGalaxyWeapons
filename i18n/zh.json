@@ -76,6 +76,29 @@
     "menu.weapons-infinity-sword": "无限剑",
     "menu.weapons-infinity-dagger": "无限匕首",
     "menu.weapons-infinity-hammer": "无限锤",
+    // Weapon category weights
+    "menu.weapons-category-weights": "武器类型权重",
+    "menu.weapons-category-weight-tooltip": "该武器类型的相对掉落概率。0=永不掉落，1=正常，2=概率翻倍。适用于所有武器，包括「自锻武器」模组。\n",
+    "menu.weapons-category-sword": "剑权重",
+    "menu.weapons-category-dagger": "匕首权重",
+    "menu.weapons-category-hammer": "锤权重",
+
+    // Integrations section
+    "menu.integrations-title": "模组集成",
+    "menu.integrations-none": "未检测到含有自定义武器的模组。",
+    // Spawn locations page
+    "menu.locations": "刷新地点",
+    "menu.locations-title": "刷新地点设置",
+    "menu.locations-lower-mines": "矿井下层 (1-40)",
+    "menu.locations-lower-mines-tooltip": "允许桶在矿井1-40层刷新。\n",
+    "menu.locations-mid-mines": "矿井中层 (41-80)",
+    "menu.locations-mid-mines-tooltip": "允许桶在矿井41-80层刷新。\n",
+    "menu.locations-upper-mines": "矿井上层 (81-120)",
+    "menu.locations-upper-mines-tooltip": "允许桶在矿井81-120层刷新。\n",
+    "menu.locations-dangerous": "危险矿井",
+    "menu.locations-dangerous-tooltip": "允许桶在危险矿井中刷新。\n",
+    "menu.locations-skull-cavern": "骷髅洞穴",
+    "menu.locations-skull-cavern-tooltip": "允许桶在骷髅洞穴中刷新。\n",
     /*********
     ** In-game text
     *********/
