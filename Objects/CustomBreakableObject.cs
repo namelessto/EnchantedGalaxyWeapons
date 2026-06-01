@@ -1,54 +1,27 @@
-using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
-using Netcode;
 using StardewValley;
 using StardewValley.Extensions;
 using StardewValley.Locations;
 using StardewValley.Objects;
 using StardewValley.Tools;
-using Object = StardewValley.Object;
 
 namespace EnchantedGalaxyWeapons.Objects
 {
-    internal class CustomBreakableObject : Object
+    internal class CustomBreakableObject : BreakableContainer
     {
-        private readonly List<int> StepsLevel = new() { 20, 40, 60, 80, 100, 120 };
-
-        [XmlElement("debris")]
-        private readonly int debris;
-
-        [XmlElement("health")]
-        private new int health;
-
-        [XmlElement("hitSound")]
-        private readonly string hitSound = "woodWhack";
-
-        [XmlElement("breakSound")]
-        private readonly string breakSound = "barrelBreak";
-
-        [XmlElement("breakDebrisSource")]
-        private readonly NetRectangle breakDebrisSource = new();
-
-        [XmlElement("breakDebrisSource2")]
-        private readonly NetRectangle breakDebrisSource2 = new();
-
+        private static readonly List<int> DropStepLevels = new() { 20, 40, 60, 80, 100, 120 };
+        private const string ContentSeedKey = "NamelessTo.EnchantedGalaxyWeapons/contentSeed";
         private float _sparkleTimer;
+        private int _health = 3;
 
         public CustomBreakableObject() { }
 
-        public CustomBreakableObject(Vector2 tile, string itemId, int health = 3, int debrisType = 12,
-            string hitSound = "woodWhack", string breakSound = "barrelBreak")
-            : base(tile, itemId)
+        public CustomBreakableObject(Vector2 tile, string itemId) : base(tile, itemId)
         {
-            this.health = health;
-            this.debris = debrisType;
-            this.hitSound = hitSound;
-            this.breakSound = breakSound;
-            this.breakDebrisSource.Value = new Rectangle(598, 1275, 13, 4);
-            this.breakDebrisSource2.Value = new Rectangle(611, 1275, 10, 4);
+            this.modData[ContentSeedKey] = Game1.random.Next().ToString();
         }
 
-        public static CustomBreakableObject GetBarrelForMines(Vector2 tile, MineShaft mine)
+        public static new CustomBreakableObject GetBarrelForMines(Vector2 tile, MineShaft mine)
         {
             int mineArea = mine.getMineArea();
             string itemId = (mine.GetAdditionalDifficulty() > 0)
@@ -67,44 +40,46 @@ namespace EnchantedGalaxyWeapons.Objects
             if (this.Location == null) return false;
             if (t == null || !t.isHeavyHitter()) return false;
 
-            this.health--;
+            _health--;
             if (t is MeleeWeapon weapon && weapon.type.Value == 2)
-                this.health--;
+                _health--;
 
-            if (this.health <= 0)
+            if (_health <= 0)
             {
-                if (!string.IsNullOrEmpty(this.breakSound))
-                    base.playNearbySoundAll(this.breakSound);
-
-                this.ReleaseContents(t.getLastFarmerToUse());
-                this.Location.objects.Remove(base.TileLocation);
-                this.SpawnDebris();
-            }
-            else if (!string.IsNullOrEmpty(this.hitSound))
-            {
-                base.playNearbySoundAll(this.hitSound);
-                Game1.createRadialDebris(this.Location, this.debris, (int)base.TileLocation.X, (int)base.TileLocation.Y, Game1.random.Next(4, 7), resource: false);
+                this.playNearbySoundAll("barrelBreak");
+                this.releaseContents(t.getLastFarmerToUse());
+                this.Location.objects.Remove(TileLocation);
+                SpawnDebris(this.Location);
+                return true;
             }
 
+            this.playNearbySoundAll("woodWhack");
+            Game1.createRadialDebris(this.Location, 12, (int)TileLocation.X, (int)TileLocation.Y, Game1.random.Next(4, 7), resource: false);
             return false;
         }
 
         public override bool onExplosion(Farmer who)
         {
             who ??= Game1.player;
-            if (this.Location == null) return true;
+            GameLocation? location = this.Location ?? Game1.currentLocation;
+            if (location == null) return true;
 
-            this.ReleaseContents(who);
-            this.SpawnDebris();
+            this.releaseContents(who);
+            location.objects.Remove(TileLocation);
+            SpawnDebris(location);
             return true;
         }
 
-        public void ReleaseContents(Farmer who)
+        // Shadows BreakableContainer.releaseContents (not virtual) — called explicitly from our overrides above.
+        public new void releaseContents(Farmer who)
         {
             if (this.Location == null || who == null) return;
 
-            Random r = Utility.CreateRandom(base.TileLocation.X, base.TileLocation.Y * 10000, Game1.stats.DaysPlayed);
-            int x = (int)base.TileLocation.X, y = (int)base.TileLocation.Y;
+            int seed = modData.TryGetValue(ContentSeedKey, out string? raw) && int.TryParse(raw, out int parsed)
+                ? parsed
+                : (int)(TileLocation.X + TileLocation.Y * 10000 + Game1.stats.DaysPlayed);
+            Random r = Utility.CreateRandom(seed);
+            int x = (int)TileLocation.X, y = (int)TileLocation.Y;
             int mineLevel = (this.Location as MineShaft)?.mineLevel ?? -1;
 
             if (r.NextDouble() <= 0.05 && Game1.player.team.SpecialOrderRuleActive("DROP_QI_BEANS"))
@@ -113,16 +88,16 @@ namespace EnchantedGalaxyWeapons.Objects
             double dropChance = r.NextDouble();
             double maxSucceedChance = ModEntry.Config.BaseSpawnChance;
 
-            // When HaveGlobalChance is on, skip floor-based scaling and use BaseSpawnChance flat
             if (!ModEntry.Config.HaveGlobalChance)
             {
-                foreach (var level in StepsLevel)
+                foreach (int level in DropStepLevels)
                 {
                     if (mineLevel >= level)
                         maxSucceedChance += ModEntry.Config.IncreaseSpawnChanceStep;
                 }
             }
 
+            bool weaponDropped = false;
             if (dropChance <= maxSucceedChance)
             {
                 MeleeWeapon? dropped = ModEntry.GenerationService.GenerateWeapon(r, ModEntry.UnlockedGalaxy, ModEntry.UnlockedInfinity);
@@ -130,12 +105,15 @@ namespace EnchantedGalaxyWeapons.Objects
                 {
                     Game1.createItemDebris(dropped, new Vector2(x, y) * 64f + new Vector2(32f), r.Next(4), this.Location);
                     ModEntry.SpawnService?.DecrementDailyLimit();
+                    weaponDropped = true;
                 }
-                else
-                {
-                    var dangerBarrel = new BreakableContainer(base.TileLocation, "262") { Location = this.Location };
-                    dangerBarrel.releaseContents(who);
-                }
+            }
+
+            if (!weaponDropped)
+            {
+                Item? loot = ModEntry.LootService.RollLoot(r);
+                if (loot != null)
+                    Game1.createItemDebris(loot, new Vector2(x, y) * 64f + new Vector2(32f), r.Next(4), this.Location);
             }
         }
 
@@ -150,7 +128,7 @@ namespace EnchantedGalaxyWeapons.Objects
             {
                 _sparkleTimer = Game1.random.Next(300, 700);
 
-                Vector2 origin = this.TileLocation * 64f + new Vector2(
+                Vector2 origin = TileLocation * 64f + new Vector2(
                     Game1.random.Next(8, 56),
                     Game1.random.Next(8, 56));
 
@@ -175,36 +153,33 @@ namespace EnchantedGalaxyWeapons.Objects
             }
         }
 
-        private Color GetChipColor() => base.ItemId switch
+        private new Color GetChipColor() => ItemId switch
         {
             "120" => Color.White,
             "122" => new Color(109, 122, 80),
-            "174" => new Color(107, 76, 83),
+            "124" => new Color(107, 76, 83),
             _     => new Color(130, 80, 30)
         };
 
-        private void SpawnDebris()
+        private void SpawnDebris(GameLocation location)
         {
             int numDebris = Game1.random.Next(4, 12);
-            Color chipColor = this.GetChipColor();
+            Color chipColor = GetChipColor();
 
             for (int i = 0; i < numDebris; i++)
             {
-                float rotSpeed = RandFloat(Game1.random, -MathF.PI / 64, MathF.PI / 64);
-                float rot = RandFloat(Game1.random, -MathF.PI / 8, MathF.PI / 8);
-                float mx = RandFloat(Game1.random, -3f, 3f);
-                float my = RandFloat(Game1.random, -1f, -0.7f);
-
-                Game1.Multiplayer.broadcastSprites(this.Location, new TemporaryAnimatedSprite(
+                Game1.Multiplayer.broadcastSprites(location, new TemporaryAnimatedSprite(
                     "LooseSprites\\Cursors",
-                    Game1.random.NextBool() ? this.breakDebrisSource.Value : this.breakDebrisSource2.Value,
+                    Game1.random.NextBool() ? new Rectangle(598, 1275, 13, 4) : new Rectangle(611, 1275, 10, 4),
                     999f, 1, 0,
-                    base.TileLocation * 64f + new Vector2(32f, 32f),
+                    TileLocation * 64f + new Vector2(32f, 32f),
                     flicker: false, Game1.random.NextBool(),
-                    (base.TileLocation.Y * 64f + 32f) / 10000f, 0.01f,
-                    chipColor, 4f, 0f, rot, rotSpeed)
+                    (TileLocation.Y * 64f + 32f) / 10000f, 0.01f,
+                    chipColor, 4f, 0f,
+                    (float)Game1.random.Next(-5, 6) * MathF.PI / 8f,
+                    (float)Game1.random.Next(-5, 6) * MathF.PI / 64f)
                 {
-                    motion = new Vector2(mx, my),
+                    motion       = new Vector2((float)Game1.random.Next(-30, 31) / 10f, Game1.random.Next(-10, -7)),
                     acceleration = new Vector2(0f, 0.3f)
                 });
             }

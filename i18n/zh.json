@@ -1,18 +1,34 @@
-﻿{
+{
     /*********
-    ** Mod Config Options
+    ** Shared
     *********/
-    // Main menu section
-    "menu.main-title": "主要选项",
-    "menu.basic-options": "基本选项",
     "menu.default": "默认值: {{defaultValue}}",
     "menu.true": "true",
     "menu.false": "false",
+
+    /*********
+    ** Main page — Barrel Spawn
+    *********/
+    "menu.spawn-settings": "刷新设置",
+
     "menu.main-daily-limit": "每日限额",
     "menu.main-daily-limit-tooltip": "是否限制每天可以刷新的桶数。禁用可忽略限制。",
     "menu.main-daily-limit-amount": "每日刷新限制",
     "menu.main-daily-limit-amount-tooltip-p1": "每天可刷新的最大桶数，如果禁用了限制，则忽略此限制。",
     "menu.main-daily-limit-amount-tooltip-p2": "打碎桶时减少。",
+
+    "menu.main-more-barrels": "允许更多桶",
+    "menu.main-more-barrels-tooltip-p1": "允许每层楼有1个以上的桶。",
+    "menu.main-more-barrels-tooltip-p2": "如果值大于每日限制，则在超过该值后停止刷新。",
+    "menu.main-barrels-amount": "额外桶数",
+    "menu.main-barrels-amount-tooltip": "增加该值可使每层楼拥有更多桶数。",
+
+    "menu.main-additional-attempts": "额外刷新尝试次数",
+    "menu.main-additional-attempts-tooltip-p1": "增加这个值，每层楼有额外再刷新一个桶的概率。",
+    "menu.main-additional-attempts-tooltip-p2": "不能用于更多桶。",
+
+    "menu.spawn-drop-chance": "掉落概率",
+
     "menu.main-global-chance": "全局概率",
     "menu.main-global-chance-tooltip-p1": "如果启用，在矿井/骷髅洞穴的任何层数，掉落的概率都是相同的。",
     "menu.main-global-chance-tooltip-p2": "而不是像通常那样在更高层数增加概率。",
@@ -21,39 +37,81 @@
     "menu.main-increment-chance-tooltip-p1": "该值在到120层之前，每20层添加增加的掉落概率。",
     "menu.main-increment-chance-tooltip-p2": "如果打开全局概率，则忽略。",
     "menu.main-dangerous-chance": "危险矿井和骷髅洞穴额外增加10%",
-    "menu.main-additional-attempts": "其它掉落",
-    "menu.main-additional-attempts-tooltip-p1": "增加这个值，每层楼有额外再刷新一个桶的概率。",
-    "menu.main-additional-attempts-tooltip-p2": "不能用于更多桶。",
-    "menu.main-more-barrels": "允许更多桶",
-    "menu.main-more-barrels-tooltip-p1": "允许每层楼有1个以上的桶。",
-    "menu.main-more-barrels-tooltip-p2": "如果值大于每日限制，则在超过该值后停止刷新。",
-    "menu.main-barrels-amount": "额外桶数",
-    "menu.main-barrels-amount-tooltip": "增加该值可使每层楼拥有更多桶数。",
-    // Enchantments menu section
+
+    /*********
+    ** Weapons page
+    *********/
+    "menu.weapons": "武器",
+    "menu.weapons-title": "武器设置",
+
+    "menu.weapons-unlock-requirements": "解锁条件",
+
+    "menu.weapons-skip-galaxy": "跳过银河检查",
+    "menu.weapons-skip-galaxy-tooltip": "允许银河系武器掉落，即使之前没有银河系武器。",
+    "menu.weapons-skip-infinity": "跳过无限检查",
+    "menu.weapons-skip-infinity-tooltip": "允许无限系武器掉落，即使之前没有无限系武器。",
+
+    "menu.weapons-pool": "武器池",
+
+    "menu.weapons-enable-vanilla": "包含所有原版武器",
+    "menu.weapons-enable-vanilla-tooltip": "将所有原版武器加入掉落池（不包括镰刀）。配合最低武器等级使用以控制品质。",
+
+    "menu.weapons-min-level": "最低武器等级",
+    "menu.weapons-min-level-tooltip": "只有等级大于等于此值的武器才能掉落。设为0则不限制。\n参考：银河之剑为13级，无限之剑为17级。\n",
+
+    "menu.weapons-category-weights": "武器类型权重",
+    "menu.weapons-category-weight-tooltip": "该武器类型的相对掉落概率。0=永不掉落，1=正常，2=概率翻倍。",
+    "menu.weapons-category-sword": "剑权重",
+    "menu.weapons-category-dagger": "匕首权重",
+    "menu.weapons-category-hammer": "锤权重",
+
+    "menu.weapons-allow": "银河与无限武器",
+
+    "menu.weapons-galaxy-sword": "银河剑",
+    "menu.weapons-galaxy-dagger": "银河匕首",
+    "menu.weapons-galaxy-hammer": "银河锤",
+    "menu.weapons-infinity-sword": "无限剑",
+    "menu.weapons-infinity-dagger": "无限匕首",
+    "menu.weapons-infinity-hammer": "无限锤",
+
+    "menu.integrations-title": "模组集成",
+    "menu.integrations-none": "未检测到含有自定义武器的模组。",
+
+    /*********
+    ** Enchantments page
+    *********/
     "menu.enchantments": "附魔",
     "menu.enchantments-title": "附魔设置",
-    "menu.enchantments-guarantee-regular": "常规附魔",
+
+    "menu.enchantments-regular-options": "常规附魔",
+    "menu.enchantments-select": "可能出现的附魔：",
+
+    "menu.enchantments-guarantee-regular": "强制常规附魔",
     "menu.enchantments-guarantee-regular-tooltip": "保证所有掉落的武器都有常规附魔。",
-    "menu.enchantments-guarantee-innate": "龙牙附魔",
-    "menu.enchantments-guarantee-innate-tooltip": "保证所有掉落的武器都有龙牙附魔。",
     "menu.enchantments-regular-chance": "常规附魔概率",
     "menu.enchantments-regular-chance-tooltip": "武器获得常规附魔的概率。",
-    "menu.enchantments-innate-chance": "龙牙附魔概率",
-    "menu.enchantments-innate-chance-tooltip": "武器获得龙牙附魔的概率。",
-    "menu.enchantments-regular-options": "常规附魔选项",
-    "menu.enchantments-select": "选择可能出现的附魔",
+
     "menu.enchantments-artful": "巧妙",
     "menu.enchantments-bug-killer": "虫子杀手",
     "menu.enchantments-crusader": "十字军",
     "menu.enchantments-haymaker": "干草",
     "menu.enchantments-vampiric": "吸血",
-    "menu.enchantments-innate-options": "龙牙附魔选项",
-    "menu.enchantments-innate-keep": "保持原样",
-    "menu.enchantments-innate-keep-tooltip": "选择此选项后，以下选项不会起任何作用",
-    "menu.enchantments-min-innate": "最小附魔概率",
-    "menu.enchantments-max-innate": "最大附魔概率",
+
+    "menu.enchantments-innate-options": "龙牙附魔",
+
+    "menu.enchantments-innate-keep": "使用原版龙牙逻辑",
+    "menu.enchantments-innate-keep-tooltip": "启用时：游戏使用内置逻辑选择龙牙附魔（原版属性选择与数量）。\n禁用时：模组根据下方的最小/最大数量及允许属性设置来应用龙牙附魔。",
+
+    "menu.enchantments-guarantee-innate": "强制龙牙附魔",
+    "menu.enchantments-guarantee-innate-tooltip": "保证所有掉落的武器都有龙牙附魔。",
+    "menu.enchantments-innate-chance": "龙牙附魔概率",
+    "menu.enchantments-innate-chance-tooltip": "武器获得龙牙附魔的概率。",
+
+    "menu.enchantments-min-innate": "最小龙牙附魔数",
+    "menu.enchantments-max-innate": "最大龙牙附魔数",
     "menu.enchantments-innate-limit-p1": "提高最低值可以保证它会被附魔。",
     "menu.enchantments-innate-limit-p2": "如果最大值较低，则最小值将为最大值。",
+
     "menu.enchantments-slime-gatherer": "史莱姆刮泥",
     "menu.enchantments-slime-slayer": "史莱姆专杀",
     "menu.enchantments-attack": "攻击",
@@ -62,31 +120,36 @@
     "menu.enchantments-weight": "重量",
     "menu.enchantments-crit-chance": "暴击机率",
     "menu.enchantments-crit-power": "暴击威力",
-    // Weapons menu section
-    "menu.weapons": "武器",
-    "menu.weapons-title": "武器设置",
-    "menu.weapons-skip-galaxy": "跳过银河检查",
-    "menu.weapons-skip-galaxy-tooltip": "允许银河系武器掉落，即使之前没有银河系武器。",
-    "menu.weapons-skip-infinity": "跳过无限检查",
-    "menu.weapons-skip-infinity-tooltip": "允许无限系武器掉落，即使之前没有无限系武器。",
-    "menu.weapons-allow": "可以获得的武器",
-    "menu.weapons-galaxy-sword": "银河剑",
-    "menu.weapons-galaxy-dagger": "银河匕首",
-    "menu.weapons-galaxy-hammer": "银河锤",
-    "menu.weapons-infinity-sword": "无限剑",
-    "menu.weapons-infinity-dagger": "无限匕首",
-    "menu.weapons-infinity-hammer": "无限锤",
-    // Weapon category weights
-    "menu.weapons-category-weights": "武器类型权重",
-    "menu.weapons-category-weight-tooltip": "该武器类型的相对掉落概率。0=永不掉落，1=正常，2=概率翻倍。适用于所有武器，包括「自锻武器」模组。\n",
-    "menu.weapons-category-sword": "剑权重",
-    "menu.weapons-category-dagger": "匕首权重",
-    "menu.weapons-category-hammer": "锤权重",
 
-    // Integrations section
-    "menu.integrations-title": "模组集成",
-    "menu.integrations-none": "未检测到含有自定义武器的模组。",
-    // Spawn locations page
+    "menu.enchantments-gem-options": "宝石附魔",
+
+    "menu.enchantments-guarantee-gem": "强制宝石附魔",
+    "menu.enchantments-guarantee-gem-tooltip": "保证所有掉落的武器都有宝石附魔。",
+    "menu.enchantments-gem-chance": "宝石附魔概率",
+    "menu.enchantments-gem-chance-tooltip": "武器获得宝石附魔的概率。",
+
+    "menu.enchantments-gem-mode": "宝石附魔模式",
+    "menu.enchantments-gem-mode-tooltip": "叠加：同一宝石叠加N次（如红宝石×3）。全不同：N种不同宝石各一次。随机：N次随机选择，可重复（如红宝石×2+海蓝宝石）。",
+    "menu.enchantments-gem-mode-stack": "叠加（同种）",
+    "menu.enchantments-gem-mode-different": "全不同",
+    "menu.enchantments-gem-mode-random": "随机（混合）",
+
+    "menu.enchantments-min-gem-level": "最少宝石数",
+    "menu.enchantments-max-gem-level": "最多宝石数",
+    "menu.enchantments-gem-level-tooltip": "宝石附魔次数（1-3）。叠加模式下为等级，全不同模式下为种类数，随机模式下为总次数。",
+
+    "menu.enchantments-gem-select": "可能出现的宝石：",
+
+    "menu.enchantments-ruby": "红宝石",
+    "menu.enchantments-aquamarine": "海蓝宝石",
+    "menu.enchantments-jade": "翡翠",
+    "menu.enchantments-amethyst": "紫水晶",
+    "menu.enchantments-topaz": "黄玉",
+    "menu.enchantments-emerald": "祖母绿",
+
+    /*********
+    ** Spawn Locations page
+    *********/
     "menu.locations": "刷新地点",
     "menu.locations-title": "刷新地点设置",
     "menu.locations-lower-mines": "矿井下层 (1-40)",
@@ -99,6 +162,32 @@
     "menu.locations-dangerous-tooltip": "允许桶在危险矿井中刷新。\n",
     "menu.locations-skull-cavern": "骷髅洞穴",
     "menu.locations-skull-cavern-tooltip": "允许桶在骷髅洞穴中刷新。\n",
+
+    /*********
+    ** Custom Loot page
+    *********/
+    "menu.loot-title": "自定义战利品",
+
+    "menu.loot-enable": "启用自定义战利品",
+    "menu.loot-enable-tooltip": "当武器未掉落时，从战利品列表中随机获得一件物品。",
+
+    "menu.loot-chance": "战利品掉落概率",
+    "menu.loot-chance-tooltip": "武器未掉落时，从战利品列表中获得物品的概率。",
+
+    "menu.loot-min-stack": "最小堆叠数量",
+    "menu.loot-max-stack": "最大堆叠数量",
+    "menu.loot-stack-tooltip": "每次掉落的物品数量范围。",
+
+    "menu.loot-value-title": "基于价值的掉落池",
+    "menu.loot-value-info": "自动将所有出售价格在指定范围内的物品（包括原版和模组物品）加入掉落池。将两项均设为0可禁用此功能。",
+    "menu.loot-min-value": "物品最低价值",
+    "menu.loot-min-value-tooltip": "出售价格低于此值的物品将被排除。设为0则不设下限。",
+    "menu.loot-max-value": "物品最高价值",
+    "menu.loot-max-value-tooltip": "出售价格高于此值的物品将被排除。设为0则不设上限。",
+
+    "menu.loot-items-title": "手动指定物品",
+    "menu.loot-custom-info": "勾选的物品无论其出售价格如何，都会被纳入掉落池。如需添加模组物品或未列出的物品，请直接在 config.json 的 'LootItems' 中添加其物品ID。",
+
     /*********
     ** In-game text
     *********/

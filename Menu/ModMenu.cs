@@ -18,20 +18,23 @@ namespace EnchantedGalaxyWeapons.Menu
             return sb.ToString();
         }
 
-        public static void BuildMenu(IModHelper helper, IManifest manifest, IGenericModConfigMenuApi configMenu, ModConfig config)
+        public static void BuildMenu(IModHelper helper, IManifest manifest, IGenericModConfigMenuApi configMenu, ModConfig config, IMonitor monitor)
         {
             SpawnMenuPage.Build(helper, manifest, configMenu, config);
 
-            configMenu.AddPageLink(manifest, "enchantments",
-                () => helper.Translation.Get("menu.enchantments-title"));
             configMenu.AddPageLink(manifest, "weapons",
                 () => helper.Translation.Get("menu.weapons-title"));
+            configMenu.AddPageLink(manifest, "enchantments",
+                () => helper.Translation.Get("menu.enchantments-title"));
             configMenu.AddPageLink(manifest, "spawnLocations",
                 () => helper.Translation.Get("menu.locations-title"));
+            configMenu.AddPageLink(manifest, "loot",
+                () => helper.Translation.Get("menu.loot-title"));
 
+            WeaponsMenuPage.Build(helper, manifest, configMenu, config, monitor);
             EnchantmentsMenuPage.Build(helper, manifest, configMenu, config);
-            WeaponsMenuPage.Build(helper, manifest, configMenu, config);
             SpawnLocationsMenuPage.Build(helper, manifest, configMenu, config);
+            CustomLootMenuPage.Build(helper, manifest, configMenu, config);
         }
     }
 }

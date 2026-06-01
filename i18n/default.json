@@ -1,63 +1,102 @@
-﻿{
+{
     /*********
-    ** Mod Config Options
+    ** Shared
     *********/
-
-    // Main menu section
-    "menu.main-title": "Main Options",
-    "menu.basic-options": "Basic Options",
     "menu.default": "Default: {{defaultValue}}",
     "menu.true": "true",
     "menu.false": "false",
 
+    /*********
+    ** Main page — Barrel Spawn
+    *********/
+    "menu.spawn-settings": "Spawn Settings",
+
     "menu.main-daily-limit": "Daily Limit",
-    "menu.main-daily-limit-tooltip": "Whether to limit the number of barrels that can spawn per day. Disable to ignore the limit.\n",
+    "menu.main-daily-limit-tooltip": "Limit how many barrels can spawn per day. Disable to remove the cap.\n",
 
     "menu.main-daily-limit-amount": "Daily Spawn Limit",
-    "menu.main-daily-limit-amount-tooltip-p1": "Maximum number of barrels that can spawn per day, ignored if the limit is disabled.\n",
-    "menu.main-daily-limit-amount-tooltip-p2": "Decrease when breaking a barrel.\n",
+    "menu.main-daily-limit-amount-tooltip-p1": "Maximum barrels that can spawn per day.\n",
+    "menu.main-daily-limit-amount-tooltip-p2": "Decreases each time a barrel is broken.\n",
 
-    "menu.main-global-chance": "Allow Global Drop Chance",
-    "menu.main-global-chance-tooltip-p1": "If enabled, the drop chance will be the same at any level in the mines/skull cavern.\n",
-    "menu.main-global-chance-tooltip-p2": "Instead of increasing chance at higher levels as it normally would.\n",
+    "menu.main-more-barrels": "Allow More Than One Barrel",
+    "menu.main-more-barrels-tooltip-p1": "Allow more than one barrel to spawn per floor.\n",
+    "menu.main-more-barrels-tooltip-p2": "Counts against the daily limit.\n",
+
+    "menu.main-barrels-amount": "Additional Barrels",
+    "menu.main-barrels-amount-tooltip": "Extra barrels to spawn per floor when Allow More Than One is enabled.\n",
+
+    "menu.main-additional-attempts": "Additional Spawn Attempts",
+    "menu.main-additional-attempts-tooltip-p1": "Extra attempts to find a valid tile when spawning a single barrel.\n",
+    "menu.main-additional-attempts-tooltip-p2": "Has no effect when Allow More Than One is enabled.\n",
+
+    "menu.spawn-drop-chance": "Drop Chance",
+
+    "menu.main-global-chance": "Global Drop Chance",
+    "menu.main-global-chance-tooltip-p1": "Use the same drop chance on every floor.\n",
+    "menu.main-global-chance-tooltip-p2": "When off, chance increases with floor depth.\n",
 
     "menu.main-base-chance": "Base Drop Chance",
 
     "menu.main-increment-chance": "Drop Chance Increment",
-    "menu.main-increment-chance-tooltip-p1": "The value is added to base drop chance after every 20 floors up to 120.\n",
-    "menu.main-increment-chance-tooltip-p2": "Ignored if global chance is on.\n",
+    "menu.main-increment-chance-tooltip-p1": "Added to drop chance every 20 floors, up to floor 120.\n",
+    "menu.main-increment-chance-tooltip-p2": "Ignored when Global Drop Chance is on.\n",
 
-    "menu.main-dangerous-chance": "The dangerous variants of the mines and skull cavern add additional 10%",
+    "menu.main-dangerous-chance": "Dangerous mines and Skull Cavern add an additional 10% drop chance.",
 
-    "menu.main-additional-attempts": "Additional Spawn Attempts",
-    "menu.main-additional-attempts-tooltip-p1": "Increase this value to have better chance to spawn a crate per floor.\n",
-    "menu.main-additional-attempts-tooltip-p2": "Doesn't work with the more barrels.\n",
+    /*********
+    ** Weapons page
+    *********/
+    "menu.weapons": "Weapons",
+    "menu.weapons-title": "Weapons",
 
-    "menu.main-more-barrels": "Allow More Barrels",
-    "menu.main-more-barrels-tooltip-p1": "Allow for more than 1 barrel per floor.\n",
-    "menu.main-more-barrels-tooltip-p2": "If value is larger than daily limit will stop spawning after passing it.\n",
+    "menu.weapons-unlock-requirements": "Unlock Requirements",
 
-    "menu.main-barrels-amount": "Additional Barrels Amount",
-    "menu.main-barrels-amount-tooltip": "Increase this value to have more barrels per floor.\n",
+    "menu.weapons-skip-galaxy": "Skip Galaxy Check",
+    "menu.weapons-skip-galaxy-tooltip": "Allow galaxy weapons to drop before the player has obtained the Galaxy Sword.\n",
 
-    // Enchantments menu section
+    "menu.weapons-skip-infinity": "Skip Infinity Check",
+    "menu.weapons-skip-infinity-tooltip": "Allow infinity weapons to drop before the player has obtained an Infinity weapon.\n",
+
+    "menu.weapons-pool": "Weapon Pool",
+
+    "menu.weapons-enable-vanilla": "Include All Vanilla Weapons",
+    "menu.weapons-enable-vanilla-tooltip": "Add all vanilla weapons to the drop pool (scythes excluded).\nUse Minimum Weapon Level to filter by quality.\n",
+
+    "menu.weapons-min-level": "Minimum Weapon Level",
+    "menu.weapons-min-level-tooltip": "Only weapons at or above this level can drop. Set to 0 to allow all levels.\nReference: Galaxy Sword is level 13, Infinity Sword is level 17.\n",
+
+    "menu.weapons-category-weights": "Type Weights",
+    "menu.weapons-category-weight-tooltip": "Relative drop chance for this weapon type. 0 = never, 1 = normal, 2 = twice as likely.\n",
+    "menu.weapons-category-sword": "Sword Weight",
+    "menu.weapons-category-dagger": "Dagger Weight",
+    "menu.weapons-category-hammer": "Hammer Weight",
+
+    "menu.weapons-allow": "Galaxy & Infinity Weapons",
+
+    "menu.weapons-galaxy-sword": "Galaxy Sword",
+    "menu.weapons-galaxy-dagger": "Galaxy Dagger",
+    "menu.weapons-galaxy-hammer": "Galaxy Hammer",
+    "menu.weapons-infinity-sword": "Infinity Sword",
+    "menu.weapons-infinity-dagger": "Infinity Dagger",
+    "menu.weapons-infinity-hammer": "Infinity Hammer",
+
+    "menu.integrations-title": "Mod Integrations",
+    "menu.integrations-none": "No mods with custom weapons detected.",
+
+    /*********
+    ** Enchantments page
+    *********/
     "menu.enchantments": "Enchantments",
-    "menu.enchantments-title": "Enchantments Page",
+    "menu.enchantments-title": "Enchantments",
+
+    "menu.enchantments-regular-options": "Regular Enchantments",
+    "menu.enchantments-select": "Enchantments that can appear:",
 
     "menu.enchantments-guarantee-regular": "Force Regular Enchantment",
-    "menu.enchantments-guarantee-regular-tooltip": "Guarantee all weapons drop will have regular enchantment.\n",
-
-    "menu.enchantments-guarantee-innate": "Force Innate Enchantment",
-    "menu.enchantments-guarantee-innate-tooltip": "Guarantee all weapons drop will have innate enchantment(s).\n",
+    "menu.enchantments-guarantee-regular-tooltip": "Guarantee every dropped weapon has a regular enchantment.\n",
 
     "menu.enchantments-regular-chance": "Regular Enchantment Chance",
-    "menu.enchantments-regular-chance-tooltip": "The chance a weapon will get a regular enchantment.\n",
-
-    "menu.enchantments-innate-chance": "Innate Enchantment Chance",
-    "menu.enchantments-innate-chance-tooltip": "The chance a weapon will get an innate enchantment.\n",
-
-    "menu.enchantments-regular-options": "Regular Enchantments Options",
-    "menu.enchantments-select": "Select enchantment that could appear",
+    "menu.enchantments-regular-chance-tooltip": "Chance a dropped weapon receives a regular enchantment.\n",
 
     "menu.enchantments-artful": "Artful",
     "menu.enchantments-bug-killer": "Bug Killer",
@@ -65,16 +104,49 @@
     "menu.enchantments-haymaker": "Haymaker",
     "menu.enchantments-vampiric": "Vampiric",
 
-    "menu.enchantments-innate-options": "Innate Enchantments Options",
+    "menu.enchantments-innate-options": "Innate Enchantments",
 
-    "menu.enchantments-innate-keep": "Keep as is",
-    "menu.enchantments-innate-keep-tooltip": "While this is selected the options below doesn't do anything",
+    "menu.enchantments-innate-keep": "Use Vanilla Innate Logic",
+    "menu.enchantments-innate-keep-tooltip": "When ON: the game picks innate enchantments using its built-in logic (vanilla stat selection and count).\nWhen OFF: the mod applies innate stats using the Min/Max count and Allowed Stats settings below.",
+
+    "menu.enchantments-guarantee-innate": "Force Innate Enchantment",
+    "menu.enchantments-guarantee-innate-tooltip": "Guarantee every dropped weapon has at least one innate enchantment.\n",
+
+    "menu.enchantments-innate-chance": "Innate Enchantment Chance",
+    "menu.enchantments-innate-chance-tooltip": "Chance a dropped weapon receives innate enchantment(s).\n",
 
     "menu.enchantments-min-innate": "Min Innate Enchantments",
     "menu.enchantments-max-innate": "Max Innate Enchantments",
 
-    "menu.enchantments-innate-limit-p1": "Increasing the minimum does guarantee it will be enchanted.\n",
-    "menu.enchantments-innate-limit-p2": "If max is lower the min the cap will be the max.",
+    "menu.enchantments-innate-limit-p1": "A minimum above 0 guarantees that many enchantments when the innate roll succeeds.\n",
+    "menu.enchantments-innate-limit-p2": "If max is lower than min, max is used as the cap.",
+
+    "menu.enchantments-gem-options": "Gem Enchantments",
+
+    "menu.enchantments-guarantee-gem": "Force Gem Enchantment",
+    "menu.enchantments-guarantee-gem-tooltip": "Guarantee every dropped weapon has a gem enchantment.\n",
+
+    "menu.enchantments-gem-chance": "Gem Enchantment Chance",
+    "menu.enchantments-gem-chance-tooltip": "Chance a dropped weapon receives a gem enchantment.\n",
+
+    "menu.enchantments-gem-mode": "Gem Application Mode",
+    "menu.enchantments-gem-mode-tooltip": "Stack: one gem type applied N times (e.g. Ruby×3).\nAll Different: N unique gems each once (e.g. Ruby+Aquamarine+Jade).\nRandom: N random picks allowing repeats (e.g. Ruby×2+Aquamarine).\n",
+    "menu.enchantments-gem-mode-stack": "Stack (one type)",
+    "menu.enchantments-gem-mode-different": "All Different",
+    "menu.enchantments-gem-mode-random": "Random (mixed)",
+
+    "menu.enchantments-min-gem-level": "Min Gem Count",
+    "menu.enchantments-max-gem-level": "Max Gem Count",
+    "menu.enchantments-gem-level-tooltip": "How many gem applications (1-3).\nStack: levels on one gem.\nAll Different: number of unique gems.\nRandom: total random picks.\n",
+
+    "menu.enchantments-gem-select": "Gems that can appear:",
+
+    "menu.enchantments-ruby": "Ruby",
+    "menu.enchantments-aquamarine": "Aquamarine",
+    "menu.enchantments-jade": "Jade",
+    "menu.enchantments-amethyst": "Amethyst",
+    "menu.enchantments-topaz": "Topaz",
+    "menu.enchantments-emerald": "Emerald",
 
     "menu.enchantments-slime-gatherer": "Slime Gatherer",
     "menu.enchantments-slime-slayer": "Slime Slayer",
@@ -85,37 +157,9 @@
     "menu.enchantments-crit-chance": "Crit. Chance",
     "menu.enchantments-crit-power": "Crit. Power",
 
-    // Weapons menu section
-    "menu.weapons": "Weapons",
-    "menu.weapons-title": "Weapons Page",
-
-    "menu.weapons-skip-galaxy": "Skip Galaxy Check",
-    "menu.weapons-skip-galaxy-tooltip": "Allow galaxy weapons to drop even without getting the galaxy sword before.\n",
-
-    "menu.weapons-skip-infinity": "Skip Infinity Check",
-    "menu.weapons-skip-infinity-tooltip": "Allow infinity weapons to drop even without getting an infinity weapon before.\n",
-
-    "menu.weapons-allow": "Weapons that can be obtained",
-
-    "menu.weapons-galaxy-sword": "Galaxy Sword",
-    "menu.weapons-galaxy-dagger": "Galaxy Dagger",
-    "menu.weapons-galaxy-hammer": "Galaxy Hammer",
-    "menu.weapons-infinity-sword": "Infinity Sword",
-    "menu.weapons-infinity-dagger": "Infinity Dagger",
-    "menu.weapons-infinity-hammer": "Infinity Hammer",
-
-    // Weapon category weights
-    "menu.weapons-category-weights": "Weapon Type Weights",
-    "menu.weapons-category-weight-tooltip": "Relative drop chance for this weapon type. 0 = never, 1 = normal, 2 = twice as likely. Applies to all weapons including Smith Yourself.\n",
-    "menu.weapons-category-sword": "Sword Weight",
-    "menu.weapons-category-dagger": "Dagger Weight",
-    "menu.weapons-category-hammer": "Hammer Weight",
-
-    // Integrations section
-    "menu.integrations-title": "Mod Integrations",
-    "menu.integrations-none": "No mods with custom weapons detected.",
-
-    // Spawn locations page
+    /*********
+    ** Spawn Locations page
+    *********/
     "menu.locations": "Spawn Locations",
     "menu.locations-title": "Spawn Locations",
     "menu.locations-lower-mines": "Lower Mines (1-40)",
@@ -130,9 +174,33 @@
     "menu.locations-skull-cavern-tooltip": "Allow barrels to spawn in the Skull Cavern.\n",
 
     /*********
+    ** Custom Loot page
+    *********/
+    "menu.loot-title": "Custom Loot",
+
+    "menu.loot-enable": "Enable Custom Loot",
+    "menu.loot-enable-tooltip": "When a weapon doesn't drop, roll for a bonus item from the loot table.\n",
+
+    "menu.loot-chance": "Loot Drop Chance",
+    "menu.loot-chance-tooltip": "Chance to receive an item from the loot table when the weapon roll fails.\n",
+
+    "menu.loot-min-stack": "Min Stack Size",
+    "menu.loot-max-stack": "Max Stack Size",
+    "menu.loot-stack-tooltip": "How many of the item can drop at once.\n",
+
+    "menu.loot-value-title": "Value-Based Pool",
+    "menu.loot-value-info": "Automatically includes every item (vanilla and modded) whose sell price falls within the range below.\nSet both to 0 to disable value filtering.",
+    "menu.loot-min-value": "Min Item Value",
+    "menu.loot-min-value-tooltip": "Items with a sell price below this are excluded. Set to 0 to disable the lower bound.\n",
+    "menu.loot-max-value": "Max Item Value",
+    "menu.loot-max-value-tooltip": "Items with a sell price above this are excluded. Set to 0 for no upper limit.\n",
+
+    "menu.loot-items-title": "Manual Items",
+    "menu.loot-custom-info": "Items checked here are always included regardless of their sell price.\nTo add modded or unlisted items, add their ID to 'LootItems' in config.json directly.",
+
+    /*********
     ** In-game text
     *********/
-
     "game.aura-felt": "Powerful aura is in the air",
     "game.aura-left": "The powerful aura won't return again today.."
 }

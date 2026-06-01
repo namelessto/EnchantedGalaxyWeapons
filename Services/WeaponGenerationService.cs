@@ -50,6 +50,41 @@ namespace EnchantedGalaxyWeapons.Services
                     weapon.AddEnchantment(enchantments[r.Next(enchantments.Count)]);
             }
 
+            if (r.NextDouble() <= _config.ChanceForGemEnchantment || _config.ForceGemEnchantment)
+            {
+                var gemTypes = GetAvailableGemTypes(weapon);
+                if (gemTypes.Count > 0)
+                {
+                    int maxLevel = Math.Max(_config.MinGemLevel, _config.MaxGemLevel);
+                    int count = _config.MinGemLevel >= maxLevel
+                        ? _config.MinGemLevel
+                        : r.Next(_config.MinGemLevel, maxLevel + 1);
+                    count = Math.Clamp(count, 1, 3);
+
+                    switch (_config.GemMode)
+                    {
+                        case GemApplicationMode.Stack:
+                            // One gem type applied count times → Ruby×3
+                            GemEnchantmentType stacked = gemTypes[r.Next(gemTypes.Count)];
+                            for (int i = 0; i < count; i++)
+                                weapon.AddEnchantment(CreateGemEnchantment(stacked));
+                            break;
+
+                        case GemApplicationMode.Different:
+                            // count different gem types, each once → Ruby + Aquamarine + Jade
+                            foreach (var type in gemTypes.OrderBy(_ => r.Next()).Take(count))
+                                weapon.AddEnchantment(CreateGemEnchantment(type));
+                            break;
+
+                        case GemApplicationMode.Random:
+                            // count random picks with replacement → Ruby×2 + Aquamarine
+                            for (int i = 0; i < count; i++)
+                                weapon.AddEnchantment(CreateGemEnchantment(gemTypes[r.Next(gemTypes.Count)]));
+                            break;
+                    }
+                }
+            }
+
             return weapon;
         }
 
@@ -66,6 +101,7 @@ namespace EnchantedGalaxyWeapons.Services
 
                 if (isGalaxy && !(_config.SkipGalaxyCheck || galaxyUnlocked)) continue;
                 if (isInfinity && !(_config.SkipInfinityCheck || infinityUnlocked)) continue;
+                if (_config.MinWeaponLevel > 0 && new MeleeWeapon(WeaponIds[type]).getItemLevel() < _config.MinWeaponLevel) continue;
 
                 float w = _config.WeaponCategoryWeights.GetValueOrDefault(CategoryOf(type), 1f);
                 if (w > 0f)
@@ -74,9 +110,27 @@ namespace EnchantedGalaxyWeapons.Services
 
             foreach (string id in GetModdedWeaponIds())
             {
+                if (_config.MinWeaponLevel > 0 && new MeleeWeapon(id).getItemLevel() < _config.MinWeaponLevel) continue;
+
                 float w = _config.WeaponCategoryWeights.GetValueOrDefault(CategoryOfId(id), 1f);
                 if (w > 0f)
                     pool.Add((id, w));
+            }
+
+            if (_config.EnableAllVanillaWeapons && Game1.weaponData != null)
+            {
+                var inPool = pool.Select(e => e.id).ToHashSet();
+                foreach (var (key, data) in Game1.weaponData)
+                {
+                    if (!int.TryParse(key, out _)) continue;         // vanilla only
+                    if (inPool.Contains(key)) continue;               // no duplicates
+                    if ((int)data.Type > 2) continue;                 // skip scythes
+                    if (_config.MinWeaponLevel > 0 && new MeleeWeapon(key).getItemLevel() < _config.MinWeaponLevel) continue;
+
+                    float w = _config.WeaponCategoryWeights.GetValueOrDefault(CategoryOfId(key), 1f);
+                    if (w > 0f)
+                        pool.Add((key, w));
+                }
             }
 
             return pool;
@@ -117,6 +171,29 @@ namespace EnchantedGalaxyWeapons.Services
             return pool[^1].id;
         }
 
+        private List<GemEnchantmentType> GetAvailableGemTypes(MeleeWeapon weapon)
+        {
+            var pool = new List<GemEnchantmentType>();
+            foreach (var (type, enabled) in _config.AllowedGemEnchantments)
+            {
+                if (!enabled) continue;
+                if (CreateGemEnchantment(type).CanApplyTo(weapon))
+                    pool.Add(type);
+            }
+            return pool;
+        }
+
+        private static BaseEnchantment CreateGemEnchantment(GemEnchantmentType type) => type switch
+        {
+            GemEnchantmentType.Ruby       => new RubyEnchantment(),
+            GemEnchantmentType.Aquamarine => new AquamarineEnchantment(),
+            GemEnchantmentType.Jade       => new JadeEnchantment(),
+            GemEnchantmentType.Amethyst   => new AmethystEnchantment(),
+            GemEnchantmentType.Topaz      => new TopazEnchantment(),
+            GemEnchantmentType.Emerald    => new EmeraldEnchantment(),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+
         private List<BaseEnchantment> GetEnchantments()
         {
             var pool = new List<BaseEnchantment>();
@@ -150,8 +227,8 @@ namespace EnchantedGalaxyWeapons.Services
                     InnateType.Weight       => new LightweightEnchantment  { Level = r.Next(1, 6) },
                     InnateType.SlimeGatherer => new SlimeGathererEnchantment(),
                     InnateType.SlimeSlayer  => new SlimeSlayerEnchantment(),
-                    InnateType.CritPower    => new CritPowerEnchantment    { Level = Math.Max(1, Math.Min(3, r.Next(level) / 3)) },
-                    InnateType.CritChance   => new CritEnchantment         { Level = Math.Max(1, Math.Min(3, r.Next(level) / 3)) },
+                    InnateType.CritPower    => new CritPowerEnchantment    { Level = Math.Max(1, Math.Min(3, r.Next(Math.Max(1, level)))) },
+                    InnateType.CritChance   => new CritEnchantment         { Level = Math.Max(1, Math.Min(3, r.Next(Math.Max(1, level)))) },
                     InnateType.Attack       => new AttackEnchantment       { Level = Math.Max(1, Math.Min(5, r.Next(level + 1) / 2 + 1)) },
                     InnateType.Speed        => new WeaponSpeedEnchantment  { Level = Math.Max(1, Math.Min(4, r.Next(Math.Max(1, level)))) },
                     _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
@@ -168,8 +245,9 @@ namespace EnchantedGalaxyWeapons.Services
             if (pool.Count == 0)
                 return weapon;
 
-            int actualMax = Math.Min(_config.MaxInnateEnchantments, pool.Count);
-            int count = r.Next(_config.MinInnateEnchantments, actualMax + 1);
+            int actualMax  = Math.Min(_config.MaxInnateEnchantments, pool.Count);
+            int lowerBound = Math.Min(_config.MinInnateEnchantments, actualMax);
+            int count = r.Next(lowerBound, actualMax + 1);
 
             var available = pool.ToList();
             for (int i = 0; i < count && available.Count > 0; i++)
@@ -193,7 +271,6 @@ namespace EnchantedGalaxyWeapons.Services
         }
 
         private static bool HasModPrefix(string weaponKey, string modId) =>
-            weaponKey.StartsWith(modId, StringComparison.OrdinalIgnoreCase) &&
-            (weaponKey.Length == modId.Length || !char.IsLetterOrDigit(weaponKey[modId.Length]));
+            WeaponKeyHelper.HasModPrefix(weaponKey, modId);
     }
 }

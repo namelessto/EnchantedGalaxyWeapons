@@ -7,8 +7,9 @@ namespace EnchantedGalaxyWeapons.Menu
     {
         public static void Build(IModHelper helper, IManifest manifest, IGenericModConfigMenuApi configMenu, ModConfig config)
         {
+            // ── Spawn Settings ────────────────────────────────────────────────
             configMenu.AddSectionTitle(manifest,
-                text: () => helper.Translation.Get("menu.main-title"));
+                text: () => helper.Translation.Get("menu.spawn-settings"));
 
             configMenu.AddBoolOption(manifest,
                 name: () => helper.Translation.Get("menu.main-daily-limit"),
@@ -24,6 +25,27 @@ namespace EnchantedGalaxyWeapons.Menu
                                helper.Translation.Get("menu.default", new { defaultValue = 5 }),
                 getValue: () => config.DailySpawnLimit,
                 setValue: v => config.DailySpawnLimit = v);
+
+            configMenu.AddNumberOption(manifest,
+                name: () => helper.Translation.Get("menu.main-barrels-amount"),
+                tooltip: () => helper.Translation.Get("menu.main-barrels-amount-tooltip") +
+                               helper.Translation.Get("menu.default", new { defaultValue = 0 }),
+                getValue: () => config.AdditionalBarrels,
+                setValue: v => config.AdditionalBarrels = v,
+                min: 0, max: 40);
+
+            configMenu.AddNumberOption(manifest,
+                name: () => helper.Translation.Get("menu.main-additional-attempts"),
+                tooltip: () => helper.Translation.Get("menu.main-additional-attempts-tooltip-p1") +
+                               helper.Translation.Get("menu.main-additional-attempts-tooltip-p2") +
+                               helper.Translation.Get("menu.default", new { defaultValue = 0 }),
+                getValue: () => config.AdditionalTriesToSpawn,
+                setValue: v => config.AdditionalTriesToSpawn = v,
+                min: 0, max: 50);
+
+            // ── Drop Chance ───────────────────────────────────────────────────
+            configMenu.AddSectionTitle(manifest,
+                text: () => helper.Translation.Get("menu.spawn-drop-chance"));
 
             configMenu.AddBoolOption(manifest,
                 name: () => helper.Translation.Get("menu.main-global-chance"),
@@ -55,31 +77,6 @@ namespace EnchantedGalaxyWeapons.Menu
 
             configMenu.AddParagraph(manifest,
                 text: () => helper.Translation.Get("menu.main-dangerous-chance"));
-
-            configMenu.AddNumberOption(manifest,
-                name: () => helper.Translation.Get("menu.main-additional-attempts"),
-                tooltip: () => helper.Translation.Get("menu.main-additional-attempts-tooltip-p1") +
-                               helper.Translation.Get("menu.main-additional-attempts-tooltip-p2") +
-                               helper.Translation.Get("menu.default", new { defaultValue = 0 }),
-                getValue: () => config.AdditionalTriesToSpawn,
-                setValue: v => config.AdditionalTriesToSpawn = v,
-                min: 0, max: 50);
-
-            configMenu.AddBoolOption(manifest,
-                name: () => helper.Translation.Get("menu.main-more-barrels"),
-                tooltip: () => helper.Translation.Get("menu.main-more-barrels-tooltip-p1") +
-                               helper.Translation.Get("menu.main-more-barrels-tooltip-p2") +
-                               helper.Translation.Get("menu.default", new { defaultValue = helper.Translation.Get("menu.false") }),
-                getValue: () => config.AllowMoreThanOne,
-                setValue: v => config.AllowMoreThanOne = v);
-
-            configMenu.AddNumberOption(manifest,
-                name: () => helper.Translation.Get("menu.main-barrels-amount"),
-                tooltip: () => helper.Translation.Get("menu.main-barrels-amount-tooltip") +
-                               helper.Translation.Get("menu.default", new { defaultValue = 0 }),
-                getValue: () => config.AdditionalBarrels,
-                setValue: v => config.AdditionalBarrels = v,
-                min: 0, max: 20);
         }
     }
 }

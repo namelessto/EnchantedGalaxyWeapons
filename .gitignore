@@ -5,3 +5,4 @@ obj/
 config.json
 .continue/rules/rules.md
 other/
+*.md
