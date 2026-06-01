@@ -1,12 +1,10 @@
 using EnchantedGalaxyWeapons.Config;
 using EnchantedGalaxyWeapons.Menu;
 using EnchantedGalaxyWeapons.Services;
-using EnchantedGalaxyWeapons.Tests;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Locations;
-using TestRunner.Api;
 
 namespace EnchantedGalaxyWeapons
 {
@@ -46,9 +44,6 @@ namespace EnchantedGalaxyWeapons
             if (_configMenu is not null)
                 Helper.Events.GameLoop.UpdateTicked += OnFirstTick;
 
-            var testRunner = Helper.ModRegistry.GetApi<ITestRunnerApi>("namelessto.TestRunner");
-            if (testRunner is not null)
-                EGWTests.Register(testRunner);
         }
 
         private void OnFirstTick(object? sender, UpdateTickedEventArgs e)

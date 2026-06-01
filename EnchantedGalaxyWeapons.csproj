@@ -7,13 +7,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <RestoreAdditionalProjectSources>../LocalPackages</RestoreAdditionalProjectSources>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.4.0" />
-    <PackageReference Include="namelessto.TestRunner.Api" Version="0.1.1" />
   </ItemGroup>
 
 
