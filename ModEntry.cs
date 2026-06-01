@@ -86,7 +86,7 @@ namespace EnchantedGalaxyWeapons
                     // Restore mod weapons to default: all detected mods enabled.
                     var groups = WeaponsMenuPage.BuildPrefixGroups(Helper);
                     _config.SeenModWeaponPrefixes = new HashSet<string>(groups.Keys, StringComparer.OrdinalIgnoreCase);
-                    _config.EnabledModWeaponIds   = new HashSet<string>(groups.Keys, StringComparer.OrdinalIgnoreCase);
+                    _config.EnabledModWeaponIds = new HashSet<string>(groups.Keys, StringComparer.OrdinalIgnoreCase);
 
                     LootService.InvalidatePool();
                 },
@@ -107,11 +107,11 @@ namespace EnchantedGalaxyWeapons
                 SpawnService.TrySpawnBarrel(mine);
         }
 
-        private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
-        {
-            if (!Context.IsPlayerFree) return;
-            if (_config.DevMenuKey.JustPressed())
-                Game1.activeClickableMenu = new DevMenu();
-        }
+        //private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
+        //{
+        //    if (!Context.IsPlayerFree) return;
+        //    if (_config.DevMenuKey.JustPressed())
+        //        Game1.activeClickableMenu = new DevMenu();
+        //}
     }
 }
